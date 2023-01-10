@@ -1,12 +1,12 @@
 # Data Pipelines with Apache Airflow 
-## Projects overview
+## Projects overview:
 The objective of the project is to help a fictional music streaming company, Sparkify, to introduce automation and monitoring to their data warehouse ETL pipelines using Apache Airflow.
 
 The company requires creation of high grade data pipelines that are dynamic and build from reusable tasks, can be monitored and allow easy backfills. Additionally, data monitoring measures are required after the ETL to catch any discrepancies in the datasets.
 
 The source data resides in S3 and needs to be processed to AWS Redshift using Apache Airflow.
 
-## Concepts
+## Concepts:
 ### Airflow
 Airflow is a software created by Airbnb in 2014 to programmatically manage and schedule company's complex workflows. It contains build-in graphical user interfaces
 that provides an overview of all the processes taking place within a workflow/pipeline. In 2016 the software became open source as an Apache Incubator and in 2019 it became 
@@ -55,7 +55,7 @@ High level interfaces to an external platform that allows to connect to their AP
 
 Note: after running docker-compose.yaml, new files/folders will be created including: config files and folder for logs.
 
-## Project workflow
+## Project workflow:
 ![Project workflow](https://github.com/pmkoszalka/UdacityNanodegree/blob/main/Data%20Pipelines%20with%20Airflow/images/project_workflow.png)
 
 ## How to run the project?
