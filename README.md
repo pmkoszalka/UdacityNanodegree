@@ -4,3 +4,4 @@
 3. Data Modeling Part 2 with Apache Cassandra
 4. Data Warehousing with AWS Redshift
 5. Data Lakes with Spark
+6. Data pipelines with Apache Airflow
