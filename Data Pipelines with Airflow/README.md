@@ -35,28 +35,28 @@ High level interfaces to an external platform that allows to connect to their AP
 (Source: https://airflow.apache.org/docs/apache-airflow/stable/index.html)
 
 ## Projects composition:
-dags - folder with dags.
-    create_tables.sql - contains queries to create sql tables.
-    sparkify_dag.py - contains main logic of the workflow, runs dag and calls operators that perform ETL tasks.
-plugins - folders with operators and helpers files.
-    __init__.py - marks directories on disk as Python package directories.
-    helpers - folder with helping files.
-        __init__.py - marks directories on disk as Python package directories.
-        sql_queries.py - contains queries for loading data into the tables on AWS Redshift.
-    operators - folder containing custom made operators.
-        __init__.py - marks directories on disk as Python package directories.
-        data_quality.py - contains Airflow operator for validation of data.
-        load_dimension.py - contains Airflow operator for loading data into dimension table.
-        load_fact.py - contains Airflow operator that loads data into a fact table.
-        stage_redshift.py - contains Airflow operator that copies data from s3 to tables in Redshift.
-images - folder with images for README
-    project_workflow.png - image of the project's workflow.
-docker-compose.yaml - docker instruction for setting up container with airflow.
+- dags - folder with dags.
+    - create_tables.sql - contains queries to create sql tables.  
+    - sparkify_dag.py - contains main logic of the workflow, runs dag and calls operators that perform ETL tasks.  
+- plugins - folders with operators and helpers files.  
+    - __init__.py - marks directories on disk as Python package directories.  
+    - helpers - folder with helping files.  
+        - __init__.py - marks directories on disk as Python package directories.  
+        - sql_queries.py - contains queries for loading data into the tables on AWS Redshift.  
+    - operators - folder containing custom made operators.  
+        - __init__.py - marks directories on disk as Python package directories.  
+        - data_quality.py - contains Airflow operator for validation of data.  
+        - load_dimension.py - contains Airflow operator for loading data into dimension table.  
+        - load_fact.py - contains Airflow operator that loads data into a fact table.  
+        - stage_redshift.py - contains Airflow operator that copies data from s3 to tables in Redshift.  
+- images - folder with images for README  
+    - project_workflow.png - image of the project's workflow.  
+- docker-compose.yaml - docker instruction for setting up container with airflow.
 
 Note: after running docker-compose.yaml, new files/folders will be created including: config files and folder for logs.
 
-## Project workflow
-
+## Project workflow:
+![Project workflow](https://github.com/pmkoszalka/UdacityNanodegree/blob/main/Data%20Pipelines%20with%20Airflow/images/project_workflow.png)
 
 ## How to run the project?
 1. Download the project
