@@ -64,7 +64,7 @@ Note: after running docker-compose.yaml, new files/folders will be created inclu
 3. Enter in your web browser: http://localhost:8080/
 4. Login: airflow Password: airflow
 5. Create Redshift cluster
-6. Create custom connections to AWS (named: 'aws_credentials') and to Redshift Database (named: 'redshift_postgres') in Airflow
+6. Create custom connections to AWS (named: 'aws_credentials') and to Postgres Database (named: 'redshift_postgres') in Airflow
 7. Run the dag
 8. Terminate the resources
 

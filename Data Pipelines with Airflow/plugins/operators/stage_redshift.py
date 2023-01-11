@@ -2,6 +2,7 @@ from airflow.models import BaseOperator
 from airflow.utils.decorators import apply_defaults
 from airflow.providers.amazon.aws.hooks.redshift_sql import RedshiftSQLHook
 from airflow.contrib.hooks.aws_hook import AwsHook
+import logging
 
 sql_copy = """
     COPY {} FROM '{}'
@@ -26,7 +27,7 @@ class StageToRedshiftOperator(BaseOperator):
         schema_path: str,
         arn: str,
         *args,
-        **kwargs
+        **kwargs,
     ):
 
         super(StageToRedshiftOperator, self).__init__(*args, **kwargs)
@@ -39,7 +40,11 @@ class StageToRedshiftOperator(BaseOperator):
 
     def execute(self, context) -> None:
         """Copies data from s3 to a table in AWS Redshift"""
+
+        logging.info("Logging to AWS and establishing connection with Redshift")
         aws_hook = AwsHook(self.aws_credentials_id)
         redshift_sql_hook = RedshiftSQLHook(self.redshift_conn_id)
+
+        logging.info(f"Copying data from s3 to Redshift table: {self.table}")
         sql_formatted = sql_copy.format(self.table, self.s3_path, self.arn, self.schema_path)
         redshift_sql_hook.run(sql_formatted)

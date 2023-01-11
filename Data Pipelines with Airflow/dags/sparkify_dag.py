@@ -19,6 +19,7 @@ default_args = {
     "email_on_retry": False,
     "retry_delay": timedelta(minutes=5),
     "start_date": datetime(2023, 1, 4),
+    "max_active_runs": 1,
 }
 
 # directed acyclic graph for the project
@@ -26,7 +27,7 @@ with DAG(
     "sparkify_dag",
     default_args=default_args,
     description="Load and transform data in Redshift with Airflow",
-    schedule_interval="@monthly",
+    schedule_interval="@hourly",
 ) as dag:
 
     # constitutes a starting point for the projects workflow
@@ -73,6 +74,7 @@ with DAG(
         table="public.users",
         sql_select=SqlQueries.user_table_insert,
         redshift_conn_id="redshift_postgres",
+        truncate=False,
     )
 
     load_song_dimension_table = LoadDimensionOperator(
@@ -80,6 +82,7 @@ with DAG(
         table="public.songs",
         sql_select=SqlQueries.song_table_insert,
         redshift_conn_id="redshift_postgres",
+        truncate=False,
     )
 
     load_artist_dimension_table = LoadDimensionOperator(
@@ -87,6 +90,7 @@ with DAG(
         table="public.artists",
         sql_select=SqlQueries.artist_table_insert,
         redshift_conn_id="redshift_postgres",
+        truncate=False,
     )
 
     load_time_dimension_table = LoadDimensionOperator(
@@ -94,12 +98,19 @@ with DAG(
         table="public.time",
         sql_select=SqlQueries.time_table_insert,
         redshift_conn_id="redshift_postgres",
+        truncate=False,
     )
 
     # checks the quality of the data
     run_quality_checks = DataQualityOperator(
         task_id="Run_data_quality_checks",
-        tables=["public.time","public.artists"],
+        tests=[
+            {"quality_test": "SELECT COUNT(*) FROM public.songplays", "unwanted_result": 0},
+            {"quality_test": "SELECT COUNT(*) FROM public.artists", "unwanted_result": 0},
+            {"quality_test": "SELECT COUNT(*) FROM public.time", "unwanted_result": 0},
+            {"quality_test": "SELECT COUNT(*) FROM public.songs", "unwanted_result": 0},
+            {"quality_test": "SELECT COUNT(*) FROM public.users", "unwanted_result": 0},
+        ],
         redshift_conn_id="redshift_postgres",
     )
 

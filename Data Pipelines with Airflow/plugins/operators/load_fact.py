@@ -1,6 +1,7 @@
 from airflow.models import BaseOperator
 from airflow.utils.decorators import apply_defaults
 from airflow.providers.amazon.aws.hooks.redshift_sql import RedshiftSQLHook
+import logging
 
 sql_insert = "INSERT INTO {} {}"
 
@@ -11,14 +12,7 @@ class LoadFactOperator(BaseOperator):
     ui_color = "#F98866"
 
     @apply_defaults
-    def __init__(
-        self,
-        table: str,
-        redshift_conn_id: str,
-        sql_select: str,
-        *args,
-        **kwargs
-    ) -> None:
+    def __init__(self, table: str, redshift_conn_id: str, sql_select: str, *args, **kwargs) -> None:
 
         super(LoadFactOperator, self).__init__(*args, **kwargs)
         self.table = table
@@ -27,7 +21,10 @@ class LoadFactOperator(BaseOperator):
 
     def execute(self, context) -> None:
         """Loads data into fact table on AWS Redshift"""
-        # self.log.info('LoadFactOperator not implemented yet')
+
+        logging.info("Establishing connection with Redshift")
         redshift_sql_hook = RedshiftSQLHook(self.redshift_conn_id)
+
+        logging.info("Loading data into fact table: {self.table}")
         sql_formatted = sql_insert.format(self.table, self.sql_select)
         redshift_sql_hook.run(sql_formatted)
