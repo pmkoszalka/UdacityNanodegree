@@ -5,3 +5,4 @@
 4. Data Warehousing with AWS Redshift
 5. Data Lakes with Spark
 6. Data pipelines with Apache Airflow
+7. Capstone Project
